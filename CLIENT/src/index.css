@@ -1,0 +1,23 @@
+@import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&display=swap");
+@import "tailwindcss";
+@plugin "daisyui";
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background-color: antiquewhite;
+  color: black;
+}
+
+.carousel .thumbs-wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.carousel .thumbs {
+  display: flex !important;
+  justify-content: center !important;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
