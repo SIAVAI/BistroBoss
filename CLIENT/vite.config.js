@@ -8,6 +8,8 @@ export default defineConfig({
     extend: {
       fontFamily: {
         cinzel: ['"Cinzel"', "serif"],
+        raleway: ['"Raleway"', "sans-serif"],
+        inter: ['"Inter"', "sans-serif"],
       },
     },
   },
