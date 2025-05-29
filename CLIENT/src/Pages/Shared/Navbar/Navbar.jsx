@@ -4,10 +4,12 @@ import { useContext } from "react";
 import person from "../../../assets/others/profile.png";
 import { Bounce, ToastContainer, toast } from "react-toastify";
 import { LuShoppingCart } from "react-icons/lu";
+import useCart from "../../../Hooks/useCart";
 
 const Navbar = () => {
   const { user, logOut } = useContext(AuthContext);
   const navigate = useNavigate();
+  const [cart] = useCart();
 
   const handleLogout = () => {
     logOut()
@@ -46,7 +48,9 @@ const Navbar = () => {
           <li className="hover:translate-y-1.5 transition duration-200">
             <button className="btn btn-ghost ">
               <LuShoppingCart />{" "}
-              <div className="badge badge-sm badge-secondary">+99</div>
+              <div className="badge badge-sm badge-secondary">
+                {cart.length}
+              </div>
             </button>
           </li>
         </>
@@ -101,13 +105,13 @@ const Navbar = () => {
         </div>
         <div className="navbar-end">
           {user ? (
-            <div className="avatar ">
-              <div className="ring-primary ring-offset-base-100 w-8 rounded-full ring-2 ring-offset-2">
+            <div className="avatar hover:scale-110 hover:bg-amber-400 transition duration-200">
+              <div className="ring-primary ring-offset-base-100 w-8 rounded-full ring-2 ring-offset-2 ">
                 <img src={person} alt="User avatar" />
               </div>
             </div>
           ) : (
-            <div>
+            <div className="">
               <Link to="/login" className="btn btn-ghost">
                 Login
               </Link>

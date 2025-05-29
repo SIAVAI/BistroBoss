@@ -35,6 +35,25 @@ async function run() {
     });
 
     //Cart Collection APIs
+    app.get("/carts", async (req, res) => {
+      const email = req.query.email;
+      const query = { email: email };
+      const result = await cartCollection.find(query).toArray();
+      res.send(result);
+    });
+
+    app.post("/carts", async (req, res) => {
+      const item = req.body;
+      const result = await cartCollection.insertOne(item);
+      res.send(result);
+    });
+    app.delete("/carts/:id", async (req, res) => {
+      const id = req.params.id;
+      const result = await cartCollection.deleteOne({
+        _id: new MongoClient.ObjectId(id),
+      });
+      res.send(result);
+    });
 
     // User Collection APIs
     app.get("/users", async (req, res) => {
