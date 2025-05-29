@@ -7,16 +7,16 @@ const Navbar = () => {
         <Link to="/">HOME</Link>
       </li>
       <li className="hover:translate-y-1.5 transition duration-200">
-        <Link to="/">CONTACT US</Link>
+        <Link to="/contact">CONTACT US</Link>
       </li>
       <li className="hover:translate-y-1.5 transition duration-200">
         <Link to="/">DASHBOARD</Link>
       </li>
       <li className="hover:translate-y-1.5 transition duration-200">
-        <Link to="/">OUR MENU</Link>
+        <Link to="/menu">OUR MENU</Link>
       </li>
       <li className="hover:translate-y-1.5 transition duration-200">
-        <Link to="/">OUR SHOP</Link>
+        <Link to="/order">OUR SHOP</Link>
       </li>
     </>
   );
@@ -62,11 +62,14 @@ const Navbar = () => {
             </div>
           </Link>
         </div>
+
         <div className="navbar-center hidden lg:flex">
           <ul className="menu menu-horizontal px-1">{navOptions}</ul>
         </div>
         <div className="navbar-end">
-          <a className="btn">Button</a>
+          <Link to="/login" className="btn">
+            Login
+          </Link>
         </div>
       </div>
     </div>
