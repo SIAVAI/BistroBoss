@@ -1,6 +1,26 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { AuthContext } from "../../../Provider/AuthProvider";
+import { useContext } from "react";
+import person from "../../../assets/others/profile.png";
+import { Bounce, ToastContainer, toast } from "react-toastify";
+import { LuShoppingCart } from "react-icons/lu";
 
 const Navbar = () => {
+  const { user, logOut } = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logOut()
+      .then(() => {
+        console.log("Logged out");
+        navigate("/");
+        toast.success("Logged out successfully!");
+      })
+      .catch((err) => {
+        console.error("Logout failed:", err.message);
+        toast.error(`Error: ${err.message}`);
+      });
+  };
   const navOptions = (
     <>
       <li className="hover:translate-y-1.5 transition duration-200">
@@ -18,6 +38,19 @@ const Navbar = () => {
       <li className="hover:translate-y-1.5 transition duration-200">
         <Link to="/order">OUR SHOP</Link>
       </li>
+      {user && (
+        <>
+          <li className="hover:translate-y-1.5 transition duration-200">
+            <p onClick={handleLogout}>LOGOUT</p>
+          </li>
+          <li className="hover:translate-y-1.5 transition duration-200">
+            <button className="btn btn-ghost ">
+              <LuShoppingCart />{" "}
+              <div className="badge badge-sm badge-secondary">+99</div>
+            </button>
+          </li>
+        </>
+      )}
     </>
   );
   return (
@@ -67,9 +100,19 @@ const Navbar = () => {
           <ul className="menu menu-horizontal px-1">{navOptions}</ul>
         </div>
         <div className="navbar-end">
-          <Link to="/login" className="btn">
-            Login
-          </Link>
+          {user ? (
+            <div className="avatar ">
+              <div className="ring-primary ring-offset-base-100 w-8 rounded-full ring-2 ring-offset-2">
+                <img src={person} alt="User avatar" />
+              </div>
+            </div>
+          ) : (
+            <div>
+              <Link to="/login" className="btn btn-ghost">
+                Login
+              </Link>
+            </div>
+          )}
         </div>
       </div>
     </div>

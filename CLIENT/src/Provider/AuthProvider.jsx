@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { createContext, useEffect, useState } from "react";
 import {
   GoogleAuthProvider,
@@ -38,13 +39,13 @@ const AuthProvider = ({ children }) => {
 
   const logOut = async () => {
     setLoading(true);
-    const { data } = await axios(
-      "https://bid-sphere-server.vercel.app/logout",
-      {
-        withCredentials: true,
-      }
-    );
-    console.log(data);
+    // const { data } = await axios(
+    //   "https://bid-sphere-server.vercel.app/logout",
+    //   {
+    //     withCredentials: true,
+    //   }
+    // );
+    // console.log(data);
     return signOut(auth);
   };
 
