@@ -9,6 +9,7 @@ import { AuthContext } from "../../Provider/AuthProvider";
 import { useForm } from "react-hook-form";
 import { Bounce, toast } from "react-toastify";
 import { Helmet } from "react-helmet";
+import useAxiosPublic from "../../Hooks/useAxiosPublic";
 
 const generateCaptcha = () => {
   const chars =
@@ -21,6 +22,7 @@ const generateCaptcha = () => {
 };
 
 const Login = () => {
+  const axiosPublic = useAxiosPublic();
   const { signIn, signInWithGoogle } = useContext(AuthContext);
   const navigate = useNavigate();
 
@@ -69,6 +71,17 @@ const Login = () => {
     signInWithGoogle()
       .then((result) => {
         console.log("Google Sign-In:", result.user);
+        axiosPublic
+          .post("/users", {
+            name: result.user.name || result.user.displayName,
+            email: result.user.email,
+            isAdmin: false,
+          })
+          .then((response) => {
+            console.log("User registered:", response.data);
+            toast.success("User registered successfully!");
+            reset();
+          });
         navigate("/");
         toast.success("Logged In Successfully!");
       })

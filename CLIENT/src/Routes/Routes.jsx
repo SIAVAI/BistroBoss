@@ -8,6 +8,10 @@ import Login from "../Pages/Login/Login";
 import Registration from "../Pages/Registration/Registration";
 import PrivateRoute from "./PrivateRoute";
 import Error from "../Components/Error/Error";
+import Dashboard from "../Layout/Dashboard";
+import MyCart from "../Pages/DashBoard/User/MyCart/MyCart";
+import AllUsers from "../Pages/DashBoard/Admin/AllUsers/AllUsers";
+import AddItems from "../Pages/DashBoard/Admin/AddItems/AddItems";
 
 export const router = createBrowserRouter([
   {
@@ -50,6 +54,29 @@ export const router = createBrowserRouter([
       {
         path: "/registration",
         element: <Registration></Registration>,
+      },
+    ],
+  },
+  {
+    path: "/dashboard",
+    element: (
+      <PrivateRoute>
+        <Dashboard />
+      </PrivateRoute>
+    ),
+    errorElement: <Error></Error>,
+    children: [
+      {
+        path: "/dashboard/myCart",
+        element: <MyCart></MyCart>,
+      },
+      {
+        path: "/dashboard/all-users",
+        element: <AllUsers></AllUsers>,
+      },
+      {
+        path: "/dashboard/add-items",
+        element: <AddItems></AddItems>,
       },
     ],
   },

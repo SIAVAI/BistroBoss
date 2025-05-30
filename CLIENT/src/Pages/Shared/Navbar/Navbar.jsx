@@ -32,7 +32,7 @@ const Navbar = () => {
         <Link to="/contact">CONTACT US</Link>
       </li>
       <li className="hover:translate-y-1.5 transition duration-200">
-        <Link to="/">DASHBOARD</Link>
+        <Link to="/dashboard">DASHBOARD</Link>
       </li>
       <li className="hover:translate-y-1.5 transition duration-200">
         <Link to="/menu">OUR MENU</Link>
@@ -46,12 +46,12 @@ const Navbar = () => {
             <p onClick={handleLogout}>LOGOUT</p>
           </li>
           <li className="hover:translate-y-1.5 transition duration-200">
-            <button className="btn btn-ghost ">
+            <Link to="/dashboard/myCart" className="btn btn-ghost ">
               <LuShoppingCart />{" "}
               <div className="badge badge-sm badge-secondary">
                 {cart.length}
               </div>
-            </button>
+            </Link>
           </li>
         </>
       )}

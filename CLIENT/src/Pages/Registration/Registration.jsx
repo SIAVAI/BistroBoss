@@ -9,8 +9,10 @@ import { Bounce, toast } from "react-toastify";
 import { useContext } from "react";
 import { AuthContext } from "../../Provider/AuthProvider";
 import { Helmet } from "react-helmet";
+import useAxiosPublic from "../../Hooks/useAxiosPublic";
 
 const Registration = () => {
+  const axiosPublic = useAxiosPublic();
   const { signInWithGoogle, createUser } = useContext(AuthContext);
   const navigate = useNavigate();
   const {
@@ -25,6 +27,17 @@ const Registration = () => {
       .then((result) => {
         console.log("User created:", result.user);
         toast.success("Registration Successful!");
+
+        axiosPublic
+          .post("/users", {
+            name: data.name,
+            email: data.email,
+            isAdmin: false,
+          })
+          .then((response) => {
+            console.log("User registered:", response.data);
+            toast.success("User registered successfully!");
+          });
         reset();
         navigate("/");
       })
@@ -42,8 +55,24 @@ const Registration = () => {
     signInWithGoogle()
       .then((result) => {
         console.log("Google Sign-In:", result.user);
-        navigate("/");
-        toast.success("Logged In Successfully!");
+        axiosPublic
+          .post("/users", {
+            name: result.user.name || result.user.displayName,
+            email: result.user.email,
+            isAdmin: false,
+          })
+          .then((response) => {
+            console.log("User registered:", response.data);
+            toast.success("User registered successfully!");
+            reset();
+            navigate("/");
+            toast.success("Logged In Successfully!");
+          })
+          .catch((err) => {
+            console.error("Error registering user:", err.message);
+            toast.error(`Something went wrong!!!`);
+            toast.error(`${err.message}`);
+          });
       })
       .catch((err) => {
         console.error("Google Login failed:", err.message);
