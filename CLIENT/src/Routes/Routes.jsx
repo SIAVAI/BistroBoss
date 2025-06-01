@@ -12,6 +12,12 @@ import Dashboard from "../Layout/Dashboard";
 import MyCart from "../Pages/DashBoard/User/MyCart/MyCart";
 import AllUsers from "../Pages/DashBoard/Admin/AllUsers/AllUsers";
 import AddItems from "../Pages/DashBoard/Admin/AddItems/AddItems";
+import ManageItems from "../Pages/DashBoard/Admin/ManageItems/ManageItems";
+import UpdateItem from "../Pages/DashBoard/Admin/UpdateItem/UpdateItem";
+import Payment from "../Pages/DashBoard/User/Payment/Payment";
+import GiveReview from "../Pages/DashBoard/User/GiveReview/GiveReview";
+import Reservation from "../Pages/DashBoard/User/Reservation/Reservation";
+import PaymentHistory from "../Pages/DashBoard/User/PaymentHistory/PaymentHistory";
 
 export const router = createBrowserRouter([
   {
@@ -77,6 +83,32 @@ export const router = createBrowserRouter([
       {
         path: "/dashboard/add-items",
         element: <AddItems></AddItems>,
+      },
+      {
+        path: "/dashboard/manage-items",
+        element: <ManageItems></ManageItems>,
+      },
+      {
+        path: "/dashboard/update-item/:id",
+        element: <UpdateItem></UpdateItem>,
+        loader: ({ params }) =>
+          fetch(`${import.meta.env.VITE_API_URL}/menu/${params.id}`),
+      },
+      {
+        path: "/dashboard/payment",
+        element: <Payment></Payment>,
+      },
+      {
+        path: "/dashboard/give-review",
+        element: <GiveReview></GiveReview>,
+      },
+      {
+        path: "/dashboard/reservation",
+        element: <Reservation></Reservation>,
+      },
+      {
+        path: "/dashboard/payment-history",
+        element: <PaymentHistory></PaymentHistory>,
       },
     ],
   },

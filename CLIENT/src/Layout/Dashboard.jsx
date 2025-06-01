@@ -54,7 +54,7 @@ const Dashboard = () => {
       </li>
       <li className="flex items-center gap-2 btn btn-ghost bg-transparent text-black hover:bg-[#D1A054] hover:text-white transition duration-200">
         <FaList className="text-xl" />
-        <Link to="">Manage Items</Link>
+        <Link to="/dashboard/manage-items">Manage Items</Link>
       </li>
       <li className="flex items-center gap-2 btn btn-ghost bg-transparent text-black hover:bg-[#D1A054] hover:text-white transition duration-200">
         <FaBook className="text-xl" />
@@ -75,11 +75,11 @@ const Dashboard = () => {
       </li>
       <li className="flex items-center gap-2 btn btn-ghost bg-transparent text-black hover:bg-[#D1A054] hover:text-white transition duration-200">
         <SlCalender className="text-xl" />
-        <Link to="">Reservation</Link>
+        <Link to="/dashboard/reservation">Reservation</Link>
       </li>
       <li className="flex items-center gap-2 btn btn-ghost bg-transparent text-black hover:bg-[#D1A054] hover:text-white transition duration-200">
         <FaMoneyBillWave className="text-xl" />
-        <Link to="">Payment History</Link>
+        <Link to="/dashboard/payment-history">Payment History</Link>
       </li>
       <li className="flex items-center gap-2 btn btn-ghost bg-transparent text-black hover:bg-[#D1A054] hover:text-white transition duration-200">
         <FaOpencart className="text-xl" />
@@ -87,7 +87,7 @@ const Dashboard = () => {
       </li>
       <li className="flex items-center gap-2 btn btn-ghost bg-transparent text-black hover:bg-[#D1A054] hover:text-white transition duration-200">
         <TbStarsFilled className="text-xl" />
-        <Link to="">Add Review</Link>
+        <Link to="/dashboard/give-review">Add Review</Link>
       </li>
       <li className="flex items-center gap-2 btn btn-ghost bg-transparent text-black hover:bg-[#D1A054] hover:text-white transition duration-200">
         <TbBrandBooking className="text-xl" />

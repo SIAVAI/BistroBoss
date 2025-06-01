@@ -1,10 +1,10 @@
-import React from "react";
 import { FaTrashAlt } from "react-icons/fa";
 import useCart from "../../../../Hooks/useCart";
 import SectionTitle from "../../../../Components/SectionTitle/SectionTitle";
 import { Helmet } from "react-helmet";
 import useAxiosSecure from "../../../../Hooks/useAxiosSecure";
 import { toast } from "react-toastify";
+import { Link } from "react-router-dom";
 
 const MyCart = () => {
   const [cart, refetch] = useCart();
@@ -13,6 +13,7 @@ const MyCart = () => {
   const totalPrice = cart.reduce((acc, item) => acc + item.price, 0);
   // Calculate total orders (sum of quantities)
   const totalOrders = cart.length;
+  console.log(cart[3]);
 
   const handleDeleteItem = (id) => {
     axiosSecure
@@ -39,7 +40,7 @@ const MyCart = () => {
       </Helmet>
       <SectionTitle
         subheading="My Cart"
-        heading="Wanna Add Moe Items?"
+        heading="Wanna Add More Items?"
         className="text-center mb-6"
       ></SectionTitle>
       <div className="w-auto mx-auto p-4 shadow-lg rounded-md ">
@@ -52,12 +53,13 @@ const MyCart = () => {
             Total Price:{" "}
             <span className="font-bold">${totalPrice.toFixed(2)}</span>
           </h2>
-          <button
+          <Link
+            to="/dashboard/payment"
             type="button"
-            className="bg-yellow-700 text-white px-4 py-1 rounded-md whitespace-nowrap"
+            className="bg-yellow-700 text-white px-4 py-1 rounded-md whitespace-nowrap btn btn-ghost hover:-translate-y-1.5 transition duration-200"
           >
             Pay
-          </button>
+          </Link>
         </div>
 
         {/* Table header */}
@@ -106,6 +108,14 @@ const MyCart = () => {
             </div>
           ))}
         </div>
+        {cart.length === 0 && (
+          <div className="text-center mt-8">
+            <h2 className="text-xl font-semibold text-gray-600">
+              🛒 Your cart is empty
+            </h2>
+            <p className="text-gray-500">Add some items to begin checkout.</p>
+          </div>
+        )}
       </div>
     </>
   );

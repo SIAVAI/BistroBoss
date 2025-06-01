@@ -3,16 +3,56 @@ import { useForm } from "react-hook-form";
 import { FaUtensils } from "react-icons/fa";
 import SectionTitle from "../../../../Components/SectionTitle/SectionTitle";
 import { motion } from "framer-motion";
+import useAxiosPublic from "../../../../Hooks/useAxiosPublic";
+import useAxiosSecure from "../../../../Hooks/useAxiosSecure";
+import { toast } from "react-toastify";
+
+const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_API_KEY;
+const image_hosting_api = `https://api.imgbb.com/1/upload?expiration=600&key=${image_hosting_key}`;
 
 const AddItems = () => {
+  const axiosPublic = useAxiosPublic();
+  const axiosSecure = useAxiosSecure();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => {
-    console.log(data);
+  const onSubmit = async (data) => {
+    try {
+      const formData = new FormData();
+      formData.append("image", data.image[0]);
+
+      // Upload image
+      const imgRes = await axiosPublic.post(image_hosting_api, formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+
+      if (imgRes.data.success) {
+        const food = {
+          name: data.recipeName,
+          recipe: data.details,
+          image: imgRes.data.data.display_url,
+          category: data.category,
+          price: parseFloat(data.price),
+        };
+
+        // Post food item to  menu API
+        const menuRes = await axiosSecure.post("/menu", food);
+
+        if (menuRes.status === 200) {
+          toast.success("Congrats!! New Food Item Added To The Menu!!!");
+        } else {
+          toast.error("There was an error adding the food item.");
+        }
+      } else {
+        toast.error("Image upload failed.");
+      }
+    } catch (error) {
+      console.error("Submission error:", error);
+      toast.error("An unexpected error occurred. Please try again.");
+    }
   };
 
   return (
@@ -51,11 +91,11 @@ const AddItems = () => {
                 {...register("category", { required: true })}
                 className="mt-1 block w-full border border-gray-300 rounded px-3 py-2"
               >
-                <option value="">Category</option>
-                <option value="appetizer">Appetizer</option>
-                <option value="main">Main</option>
+                <option value="salad">Salad</option>
+                <option value="soup">Soup</option>
+                <option value="pizza">Pizza</option>
                 <option value="dessert">Dessert</option>
-                <option value="popular">Popular</option>
+                <option value="drinks">Drinks</option>
               </select>
               {errors.category && (
                 <span className="text-red-500 text-sm">
@@ -100,14 +140,14 @@ const AddItems = () => {
             )}
           </div>
 
-          <div>
+          <div className="">
             <label className="block text-sm font-medium text-gray-700">
               Upload Image
             </label>
             <input
               type="file"
               {...register("image")}
-              className="mt-1 block w-full"
+              className="mt-1 block w-full font-semibold"
             />
           </div>
 
