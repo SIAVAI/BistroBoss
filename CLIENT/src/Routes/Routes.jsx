@@ -18,6 +18,10 @@ import Payment from "../Pages/DashBoard/User/Payment/Payment";
 import GiveReview from "../Pages/DashBoard/User/GiveReview/GiveReview";
 import Reservation from "../Pages/DashBoard/User/Reservation/Reservation";
 import PaymentHistory from "../Pages/DashBoard/User/PaymentHistory/PaymentHistory";
+import MyBookings from "../Pages/DashBoard/User/MyBookings/MyBookings";
+import ManageBookings from "../Pages/DashBoard/Admin/ManageBookings/ManageBookings";
+import AdminHome from "../Pages/DashBoard/Admin/AdminHome/AdminHome";
+import UserHome from "../Pages/DashBoard/User/UserHome/UserHome";
 
 export const router = createBrowserRouter([
   {
@@ -109,6 +113,22 @@ export const router = createBrowserRouter([
       {
         path: "/dashboard/payment-history",
         element: <PaymentHistory></PaymentHistory>,
+      },
+      {
+        path: "/dashboard/my-bookings",
+        element: <MyBookings></MyBookings>,
+      },
+      {
+        path: "/dashboard/manage-bookings",
+        element: <ManageBookings></ManageBookings>,
+      },
+      {
+        path: "/dashboard/admin-home",
+        element: <AdminHome></AdminHome>,
+      },
+      {
+        path: "/dashboard/user-home",
+        element: <UserHome></UserHome>,
       },
     ],
   },

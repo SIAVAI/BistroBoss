@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
@@ -6,15 +7,20 @@ import SectionTitle from "../../Components/SectionTitle/SectionTitle";
 
 import "swiper/css";
 import "swiper/css/navigation";
+import useAxiosPublic from "../../Hooks/useAxiosPublic";
+import { useQuery } from "@tanstack/react-query";
 
 const Testimonials = () => {
-  const [reviews, setReviews] = useState([]);
+  const axiosPublic = useAxiosPublic();
 
-  useEffect(() => {
-    fetch("/reviews.json")
-      .then((res) => res.json())
-      .then((data) => setReviews(data));
-  }, []);
+  const { refetch, data: reviews = [] } = useQuery({
+    queryKey: ["reviews"],
+    queryFn: async () => {
+      const res = await axiosPublic.get(`/reviews`);
+      return res.data;
+    },
+    refetchOnWindowFocus: false,
+  });
 
   const renderStars = (rating) => {
     return Array.from({ length: 5 }, (_, i) =>

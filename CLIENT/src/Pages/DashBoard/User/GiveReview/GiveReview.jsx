@@ -20,7 +20,7 @@ const GiveReview = () => {
 
   const onSubmit = async (data) => {
     const formData = { ...data, rating };
-    console.log("Review Submitted:", formData);
+    //console.log("Review Submitted:", formData);
 
     const reviewData = {
       name: user?.name || user?.displayName || "Anonymous",

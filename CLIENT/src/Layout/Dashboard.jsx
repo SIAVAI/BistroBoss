@@ -46,7 +46,7 @@ const Dashboard = () => {
     <>
       <li className="flex items-center gap-2 btn btn-ghost bg-transparent text-black hover:bg-[#D1A054] hover:text-white transition duration-200">
         <FcHome className="text-xl" />
-        <Link to="">Admin Home</Link>
+        <Link to="/dashboard/admin-home">Admin Home</Link>
       </li>
       <li className="flex items-center gap-2 btn btn-ghost bg-transparent text-black hover:bg-[#D1A054] hover:text-white transition duration-200">
         <ImSpoonKnife className="text-xl" />
@@ -58,7 +58,7 @@ const Dashboard = () => {
       </li>
       <li className="flex items-center gap-2 btn btn-ghost bg-transparent text-black hover:bg-[#D1A054] hover:text-white transition duration-200">
         <FaBook className="text-xl" />
-        <Link to="">Manage Bookings</Link>
+        <Link to="/dashboard/manage-bookings">Manage Bookings</Link>
       </li>
       <li className="flex items-center gap-2 btn btn-ghost bg-transparent text-black hover:bg-[#D1A054] hover:text-white transition duration-200">
         <FaUsers className="text-xl" />
@@ -71,7 +71,7 @@ const Dashboard = () => {
     <ul>
       <li className="flex items-center gap-2 btn btn-ghost bg-transparent text-black hover:bg-[#D1A054] hover:text-white transition duration-200">
         <FaHome className="text-xl" />
-        <Link to="">User Home</Link>
+        <Link to="/dashboard/user-home">User Home</Link>
       </li>
       <li className="flex items-center gap-2 btn btn-ghost bg-transparent text-black hover:bg-[#D1A054] hover:text-white transition duration-200">
         <SlCalender className="text-xl" />
@@ -91,7 +91,7 @@ const Dashboard = () => {
       </li>
       <li className="flex items-center gap-2 btn btn-ghost bg-transparent text-black hover:bg-[#D1A054] hover:text-white transition duration-200">
         <TbBrandBooking className="text-xl" />
-        <Link to="">My Booking(s)</Link>
+        <Link to="/dashboard/my-bookings">My Booking(s)</Link>
       </li>
     </ul>
   );

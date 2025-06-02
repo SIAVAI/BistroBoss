@@ -4,18 +4,52 @@ import { motion } from "framer-motion";
 import { FaCalendarAlt, FaClock, FaUserFriends } from "react-icons/fa";
 import ReservationLocation from "./ReservationLocation";
 import SectionTitle from "../../../../Components/SectionTitle/SectionTitle";
+import useAxiosPublic from "../../../../Hooks/useAxiosPublic";
+import { toast } from "react-toastify";
+import useAuth from "../../../../Hooks/useAuth";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 const Reservation = () => {
+  const [name, setName] = useState("");
+  const { user } = useAuth();
+  useEffect(() => {
+    const email = user.email;
+    const fetchTheName = async () => {
+      const result = await axios.get(
+        `${import.meta.env.VITE_API_URL}/users/${email}`
+      );
+
+      setName(result.data.name);
+    };
+    fetchTheName();
+  }, [user?.email]);
+  const axiosPublic = useAxiosPublic();
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
+    setValue,
   } = useForm();
 
-  const onSubmit = (data) => {
+  setValue("name", name);
+
+  const onSubmit = async (data) => {
     console.log("Reservation Details:", data);
-    reset();
+
+    try {
+      const response = await axiosPublic.post("/reservations", data);
+      if (response.data.success) {
+        toast.success("Reservation submitted successfully!");
+        reset({ email: data.email, name: data.name });
+      } else {
+        toast.error("Failed to submit reservation.");
+      }
+    } catch (error) {
+      console.error("Error submitting reservation:", error);
+      toast.error("Something went wrong while submitting your reservation.");
+    }
   };
 
   return (
@@ -29,7 +63,7 @@ const Reservation = () => {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="w-full max-w-4xl bg-white p-8 rounded-xl shadow-lg"
+          className="w-full  max-w-4xl bg-white p-8 rounded-xl shadow-lg"
         >
           <h2 className="text-2xl font-bold text-center mb-6">Book A Table</h2>
 
@@ -45,7 +79,7 @@ const Reservation = () => {
                 <input
                   type="date"
                   {...register("date", { required: "Date is required" })}
-                  className="input input-bordered pl-10 w-full"
+                  className="input input-bordered pl-10 w-full bg-white"
                 />
               </div>
               {errors.date && (
@@ -61,7 +95,7 @@ const Reservation = () => {
                 <input
                   type="time"
                   {...register("time", { required: "Time is required" })}
-                  className="input input-bordered pl-10 w-full"
+                  className="input input-bordered pl-10 w-full bg-white"
                 />
               </div>
               {errors.time && (
@@ -78,7 +112,7 @@ const Reservation = () => {
                   {...register("guest", {
                     required: "Guest count is required",
                   })}
-                  className="select select-bordered pl-10 w-full"
+                  className="select select-bordered pl-10 w-full bg-white"
                 >
                   <option value="">Select</option>
                   <option value="1 Person">1 Person</option>
@@ -94,13 +128,14 @@ const Reservation = () => {
 
             {/* Name */}
             <div className="col-span-1">
-              <label className="block mb-1 font-medium">Name*</label>
+              <label className="block mb-1 font-medium">Name</label>
               <input
                 type="text"
                 {...register("name", { required: "Name is required" })}
-                placeholder="Your Name"
-                className="input input-bordered w-full"
+                className="input input-bordered w-full disabled:text-black disabled:font-mono  disabled:bg-white disabled:cursor-not-allowed"
+                disabled={true}
               />
+
               {errors.name && (
                 <p className="text-red-500 text-sm">{errors.name.message}</p>
               )}
@@ -113,7 +148,7 @@ const Reservation = () => {
                 type="tel"
                 {...register("phone", { required: "Phone number is required" })}
                 placeholder="Phone Number"
-                className="input input-bordered w-full"
+                className="input input-bordered w-full bg-white"
               />
               {errors.phone && (
                 <p className="text-red-500 text-sm">{errors.phone.message}</p>
@@ -122,12 +157,14 @@ const Reservation = () => {
 
             {/* Email */}
             <div className="col-span-1">
-              <label className="block mb-1 font-medium">Email*</label>
+              <label className="block mb-1 font-medium">Email</label>
               <input
                 type="email"
                 {...register("email", { required: "Email is required" })}
                 placeholder="Email"
-                className="input input-bordered w-full"
+                className="input input-bordered w-full disabled:text-black disabled:font-mono disabled:bg-white disabled:cursor-not-allowed"
+                defaultValue={user?.email}
+                disabled={true}
               />
               {errors.email && (
                 <p className="text-red-500 text-sm">{errors.email.message}</p>

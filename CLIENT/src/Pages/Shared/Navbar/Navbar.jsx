@@ -5,11 +5,26 @@ import person from "../../../assets/others/profile.png";
 import { Bounce, ToastContainer, toast } from "react-toastify";
 import { LuShoppingCart } from "react-icons/lu";
 import useCart from "../../../Hooks/useCart";
+import { useState } from "react";
+import { useEffect } from "react";
+import axios from "axios";
 
 const Navbar = () => {
   const { user, logOut } = useContext(AuthContext);
   const navigate = useNavigate();
   const [cart] = useCart();
+  const [isAdmin, setIsAdmin] = useState(false);
+  useEffect(() => {
+    axios
+      .get(`${import.meta.env.VITE_API_URL}/users/${user?.email}`)
+      .then((response) => {
+        const data = response.data;
+        setIsAdmin(data.isAdmin);
+      })
+      .catch((error) => {
+        console.error("Error fetching user data:", error);
+      });
+  }, [user]);
 
   const handleLogout = () => {
     logOut()
@@ -32,7 +47,11 @@ const Navbar = () => {
         <Link to="/contact">CONTACT US</Link>
       </li>
       <li className="hover:translate-y-1.5 transition duration-200">
-        <Link to="/dashboard">DASHBOARD</Link>
+        {isAdmin ? (
+          <Link to="/dashboard/admin-home">DASHBOARD</Link>
+        ) : (
+          <Link to="/dashboard/user-home">DASHBOARD</Link>
+        )}
       </li>
       <li className="hover:translate-y-1.5 transition duration-200">
         <Link to="/menu">OUR MENU</Link>
