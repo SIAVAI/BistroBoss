@@ -4,6 +4,8 @@ Bistro Boss is a comprehensive restaurant management website built using the MER
 
 ---
 
+🔗 **Live Site:** [https://bistroboss-e45f6.web.app](https://bistroboss-e45f6.web.app)
+
 ## 🚀 Features
 
 - **User Authentication**: Secure login and registration using JWT.

@@ -9,7 +9,7 @@ const Order = () => {
   const [activeTab, setActiveTab] = useState("salad");
 
   useEffect(() => {
-    fetch("http://localhost:5000/menu")
+    fetch(`${import.meta.env.VITE_API_URL}/menu`)
       .then((res) => res.json())
       .then((data) => setMenuItems(data));
   }, []);
